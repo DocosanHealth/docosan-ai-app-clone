@@ -64,3 +64,4 @@ yarn-error.log
 .idea
 Gemfile.lock
 yarn.lock
+.env
