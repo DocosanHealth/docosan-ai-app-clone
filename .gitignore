@@ -65,3 +65,5 @@ yarn-error.log
 Gemfile.lock
 yarn.lock
 .env
+Podfile.lock
+
