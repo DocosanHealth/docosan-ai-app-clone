@@ -5,8 +5,8 @@ import { useTranslation } from 'react-i18next';
 import CarouselBox from '../../components/CarouselBox';
 import LinearGradient from 'react-native-linear-gradient';
 
-const Welcome = () => {
-  const { t } = useTranslation(['welcome']);
+const SWelcome = () => {
+  const { t } = useTranslation(['example', 'welcome']);
   const [indexActive, setIndexActive] = React.useState(0);
 
 const data = [
@@ -90,7 +90,7 @@ const data = [
   );
 };
 
-export default Welcome;
+export default SWelcome;
 
 const styles = StyleSheet.create({
   linearGradient: {

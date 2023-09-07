@@ -1,24 +1,30 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import {
-  persistReducer,
-  persistStore,
   FLUSH,
-  REHYDRATE,
   PAUSE,
   PERSIST,
+  persistReducer,
+  persistStore,
   PURGE,
   REGISTER,
+  REHYDRATE,
   Storage,
 } from 'redux-persist';
 import { MMKV } from 'react-native-mmkv';
 
-import { api } from '../services/api';
+import createSagaMiddleware from 'redux-saga';
+import rootSaga from './rootSaga';
+import reactotronConfig from '@/services/reactotronConfig';
+
 import theme from './theme';
+import appState from './appState/AppStateRedux';
+
+const sagaMiddleware = createSagaMiddleware();
 
 const reducers = combineReducers({
   theme,
-  [api.reducerPath]: api.reducer,
+  appState,
 });
 
 const storage = new MMKV();
@@ -40,7 +46,7 @@ export const reduxStorage: Storage = {
 const persistConfig = {
   key: 'root',
   storage: reduxStorage,
-  whitelist: ['theme', 'auth'],
+  whitelist: ['theme', 'auth', 'appState'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
@@ -52,19 +58,25 @@ const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(api.middleware);
+    })
+      // .concat(api.middleware)
+      .concat(sagaMiddleware);
 
     if (__DEV__ && !process.env.JEST_WORKER_ID) {
       const createDebugger = require('redux-flipper').default;
       middlewares.push(createDebugger());
+      // middlewares.push(reactotronConfig.createEnhancer());
     }
 
     return middlewares;
   },
+  enhancers: [reactotronConfig.createEnhancer!()],
 });
 
 const persistor = persistStore(store);
 
 setupListeners(store.dispatch);
+sagaMiddleware.run(rootSaga);
 
 export { store, persistor };
+export type RootState = ReturnType<typeof store.getState>;
