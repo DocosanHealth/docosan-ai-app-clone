@@ -1,9 +1,11 @@
 import React, { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
-import ActionSheet from 'react-native-actions-sheet';
+import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet';
 
 const LanguageSwitcher: React.FC = () => {
-	const actionSheetRef = useRef<ActionSheet | null>(null);
+	const actionSheetRef = useRef<ActionSheetRef | null>(null);
+  const { t } = useTranslation(['welcome']);
 
   const handleLanguageChange = (index: number) => {
     if (index === 0) {
@@ -28,16 +30,24 @@ const LanguageSwitcher: React.FC = () => {
       </TouchableOpacity>
 			<View style={styles.boxDropdown}>
 				<ActionSheet ref={actionSheetRef}>
-					<TouchableOpacity onPress={() => handleLanguageChange(0)}>
-						<Text style={styles.boxText}>Tiếng Anh</Text>
-					</TouchableOpacity>
-					<TouchableOpacity onPress={() => handleLanguageChange(1)}>
-						<Text style={styles.boxText}>Tiếng Việt</Text>
-					</TouchableOpacity>
-					<TouchableOpacity onPress={() => actionSheetRef.current?.setModalVisible(false)}>
-						<Text style={[styles.boxText, styles.boxText__cancel]}>Cancel</Text>
-					</TouchableOpacity>
-      </ActionSheet>
+					<View style={styles.box}>
+						<TouchableOpacity onPress={() => handleLanguageChange(0)} style={styles.boxItem}>
+							<Image source={require('theme/assets/images/US.png')} style={styles.boxImage} />
+							<Text style={styles.boxText}>
+								English
+							</Text>
+						</TouchableOpacity>
+						<TouchableOpacity onPress={() => handleLanguageChange(1)} style={styles.boxItem}>
+							<Image source={require('theme/assets/images/VN.png')} style={styles.boxImage} />
+							<Text style={styles.boxText}>
+								Tiếng Việt
+							</Text>
+						</TouchableOpacity>
+						<TouchableOpacity onPress={() => actionSheetRef.current?.setModalVisible(false)}>
+							<Text style={[styles.boxText, styles.boxText__cancel]}>{t('cancel')}</Text>
+							</TouchableOpacity>
+					</View>
+				</ActionSheet>
 			</View>
     </View>
   );
@@ -76,5 +86,21 @@ const styles = StyleSheet.create({
 	},
 	boxText__cancel: {
 		color: '#f00',
+	},
+	boxImage: {
+		width: 20,
+		height: 15,
+	},
+	boxItem: {
+		display: 'flex',
+		columnGap: 10,
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'flex-start',
+		paddingHorizontal: '40%',
+	},
+	box: {
+		marginBottom: 10,
+		paddingTop: 10,
 	},
 });

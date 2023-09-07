@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import CarouselCardItem, { SLIDER_WIDTH, ITEM_WIDTH, ITEM_HEIGHT } from './carouselCardItem';
 
-const CarouselBox = ({ data }: any ) => {
+const CarouselBox = ({ data, handleLanguageChange }: any ) => {
   const Refcarousel = React.useRef(null);
-  const [index, setIndex] = React.useState(0);
+  const [activeIndex, setActiveIndex] = React.useState(0);
 
+  useEffect(() => {
+    handleLanguageChange && handleLanguageChange(activeIndex);
+  }, [activeIndex]);
   const dotStyle =
     {
       width: 10,
@@ -21,23 +24,33 @@ const CarouselBox = ({ data }: any ) => {
       marginHorizontal: 2,
       padding: 0,
       marginBottom: 0,
-    };
+  };
+  const renderCarouselItem = ({ item, index }: any) => {
+    return (
+      <CarouselCardItem
+        item={item}
+        index={index}
+        activeIndex={activeIndex}
+      />
+    );
+  };
+
   return (
     <View style={[styles.boxCarousel]}>
       <Carousel
-        layout="stack"
+        layout="default"
         ref={Refcarousel}
         data={data}
-        renderItem={CarouselCardItem}
+        renderItem={renderCarouselItem}
         sliderWidth={SLIDER_WIDTH}
         itemWidth={ITEM_WIDTH}
         inactiveSlideShift={0}
         useScrollView={true}
-        onSnapToItem={(i) => setIndex(i)}
+        onSnapToItem={(i) => setActiveIndex(i)}
       />
       <Pagination
         dotsLength={data.length}
-        activeDotIndex={index}
+        activeDotIndex={activeIndex}
         dotStyle={dotStyle}
         inactiveDotOpacity={0.4}
         inactiveDotScale={0.6}

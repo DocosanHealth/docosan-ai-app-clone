@@ -1,5 +1,19 @@
 {
-  "title": "Bienvenue sur",
-  "subtitle": "Le $t(common:appName.full)",
-  "description": "Vous voulez découvrir des fonctionnalités ? Cliquez sur l'un des trois boutons en bas de l'écran. Le premier vous permet d'appeler une API REST. Le deuxième de changer la couleur du thème. Et le troisième de changer la langue"
+  "start_chat": "Bắt Đầu Trò Chuyện",
+  "by_proceeding_you_accept_our": "Bằng cách tiếp tục, bạn chấp nhận",
+  "terms_of_use": " Điều khoản sử dụng",
+  "and": " và",
+  "privacy_policy": " Chính sách quyền riêng tư",
+  "our": " của chúng tôi",
+  "ask": "Hãy hỏi ",
+  "dr_an": "Bác sĩ An",
+  "about_any_medical_issue": " về bất kỳ vấn đề y tế nào!",
+  "cutting_edge_ai_tailored_for": "Công Nghệ Trí Tuệ Nhân Tạo tiên tiến, được thiết kế riêng cho",
+  "viet_nam_text": "Việt Nam!",
+  "content_slider_3": "Bác sĩ An được đào tạo về trí tuệ nhân tạo y tế mới nhất của Hoa Kỳ, phù hợp với người Việt Nam sử dụng dữ liệu đã bảo mật từ Docosan.",
+  "advanced_ai": "Công nghệ Trí Tuệ Nhận Tạo từ Hoa Kỳ",
+  "tailored_for_vietnam": "Dành Riêng cho người dùng Việt Nam",
+  "accurate": "Công nghệ chính xác ",
+  "doctor_approved_technology": "được bác sĩ phê duyệt",
+  "cancel": "Huỷ"
 }
