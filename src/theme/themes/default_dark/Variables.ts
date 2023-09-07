@@ -11,7 +11,7 @@ export const Colors = {
 
 export const NavigationColors: Partial<ThemeNavigationColors> = {
   primary: Colors.primary,
-  background: '#1B1A23',
+  background: '#FFFFFF',
   card: '#1B1A23',
 };
 

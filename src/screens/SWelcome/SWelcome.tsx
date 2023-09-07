@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
-const Welcome = () => {
+const SWelcome = () => {
   const { t } = useTranslation(['example', 'welcome']);
   const dispatch = useDispatch();
 
@@ -12,6 +12,6 @@ const Welcome = () => {
   }} />;
 };
 
-export default Welcome;
+export default SWelcome;
 
 

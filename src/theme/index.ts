@@ -5,3 +5,4 @@ export { default as Gutters } from './Gutters';
 export { default as Images } from './Images';
 export { default as Layout } from './Layout';
 export { default as DefaultVariables } from './Variables';
+export { default as Colors } from './Colors';

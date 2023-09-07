@@ -6,13 +6,11 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
-  Alert,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Brand } from '../../components';
 import { useTheme } from '../../hooks';
-import { useLazyFetchOneQuery } from '../../services/modules/users';
 import { changeTheme, ThemeState } from '../../store/theme';
 import i18next from 'i18next';
 
@@ -28,14 +26,14 @@ const Example = () => {
   } = useTheme();
   const dispatch = useDispatch();
 
-  const [fetchOne, { data, isSuccess, isLoading, isFetching }] =
-    useLazyFetchOneQuery();
+  // const [fetchOne, { data, isSuccess, isLoading, isFetching }] =
+  //   useLazyFetchOneQuery();
 
-  useEffect(() => {
-    if (isSuccess && data?.name) {
-      Alert.alert(t('example:helloUser', { name: data.name }));
-    }
-  }, [isSuccess, data]);
+  // useEffect(() => {
+  //   if (isSuccess && data?.name) {
+  //     Alert.alert(t('example:helloUser', { name: data.name }));
+  //   }
+  // }, [isSuccess, data]);
 
   const onChangeTheme = ({ theme, darkMode }: Partial<ThemeState>) => {
     dispatch(changeTheme({ theme, darkMode }));
@@ -196,19 +194,6 @@ const Example = () => {
             Gutters.smallTMargin,
           ]}
         >
-          <TouchableOpacity
-            style={[Common.button.circle, Gutters.regularBMargin]}
-            onPress={() => fetchOne(`${Math.ceil(Math.random() * 10 + 1)}`)}
-          >
-            {isFetching || isLoading ? (
-              <ActivityIndicator />
-            ) : (
-              <Image
-                source={Images.icons.send}
-                style={{ tintColor: isDark ? '#A6A4F0' : '#44427D' }}
-              />
-            )}
-          </TouchableOpacity>
 
           <TouchableOpacity
             style={[Common.button.circle, Gutters.regularBMargin]}
