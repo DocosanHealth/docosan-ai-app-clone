@@ -16,12 +16,12 @@ const CarouselCardItem = ({ item, index, activeIndex }: any) => {
     <View style={styles.container} key={index}>
       <LanguageSwitcher />
       {item?.language === true ? (
-        <>
+        <View style={styles.boxImage}>
           <Image
             source={item.imgUrl}
             style={styles.imageLogo}
           />
-        </>
+        </View>
       ) : null}
       {/* {index === 2 ? <Text style={styles.header}>app</Text> : null} */}
       {item?.videoUrl && activeIndex === index ? (
@@ -106,20 +106,22 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   imageLogo: {
-    alignItems: 'center',
-    justifyContent: 'center',
     alignSelf: 'center',
     resizeMode: 'contain',
-
     width: ITEM_WIDTH - 60,
+    height: '90%',
+
+    // flex: 1,
+  },
+  boxImage: {
     flex: 1,
+    justifyContent: 'flex-end',
   },
   coloredText: {
     color: '#4AC0A4', // Màu chữ cho phần "Dr. An"
   },
   boxContent: {
     flex: 1,
-    justifyContent: 'flex-end',
   },
   image: {
     width: 32,
