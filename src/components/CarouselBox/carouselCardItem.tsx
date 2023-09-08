@@ -78,7 +78,7 @@ const StyledTextTitle = styled.Text<{ languages: boolean }>`
   font-family: Inter;
   font-size: ${props => props.languages ? '26' : '32'};
   font-weight: 700;
-  line-height: ${props => props.languages ? '30' : '38'};
+  line-height: ${props => props.languages ? '32' : '38'};
   letter-spacing: 0;
   text-align: left;
   color: #FFFFFF;
