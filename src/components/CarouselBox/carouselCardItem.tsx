@@ -32,14 +32,14 @@ const CarouselCardItem = ({ item, index, activeIndex }: any) => {
           <>
             <StyledBox languages={language === 'vi' ? true : false}>
               <Image source={require('theme/assets/images/US.png')} style={styles.image} />
-              <StyledTextFlag languages={language === 'vi' ? true : false}>{item?.textFlagVN}</StyledTextFlag>
+              <StyledTextFlag>{item?.textFlagVN}</StyledTextFlag>
             </StyledBox>
             <StyledBox languages={language === 'vi' ? true : false}>
               <Image source={require('theme/assets/images/VN.png')} style={styles.image} />
-              <StyledTextFlag languages={language === 'vi' ? true : false}>{item?.textFlagUS}</StyledTextFlag>
+              <StyledTextFlag>{item?.textFlagUS}</StyledTextFlag>
             </StyledBox>
           </>
-          <Text style={styles.content}>{item?.content}</Text>
+          <StyledTextContent languages={language === 'vi' ? true : false}>{item?.content}</StyledTextContent>
         </View>
       ) : null}
       {item?.title === true ? (
@@ -63,15 +63,28 @@ const StyledBox = styled.View<{ languages: boolean }>`
   align-items: center;
 `;
 
-const StyledTextFlag = styled.Text<{ languages: boolean }>`
+const StyledTextFlag = styled.Text`
   font-family: Inter;
-  font-size: ${props => props.languages ? '14' : '16'};
   font-weight: 600;
-  line-height: ${props => props.languages ? '20' : '24'};
+  line-height: 24;
+  font-size: 16;
   letter-spacing: 0;
   text-align: left;
   color: #FFFFFF;
   width: 80%;
+`;
+const StyledTextContent = styled.Text<{ languages: boolean }>`
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 24;
+  font-size: 16;
+  letter-spacing: 0;
+  text-align: left;
+  color: #FFFFFF;
+  align-self: center;
+  padding-horizontal: 50;
+  padding-top: ${props => props.languages ? '10' : '20'};
+  padding-bottom: ${props => props.languages ? '5' : '20'};
 `;
 
 const StyledTextTitle = styled.Text<{ languages: boolean }>`
@@ -103,20 +116,6 @@ const styles = StyleSheet.create({
   },
   coloredText: {
     color: '#4AC0A4', // Màu chữ cho phần "Dr. An"
-  },
-  content: {
-    fontFamily: 'Inter',
-    fontSize: 16,
-    fontWeight: '500',
-    lineHeight: 22,
-    letterSpacing: 0,
-    textAlign: 'left',
-    color: '#FFFFFF',
-    alignSelf: 'center',
-    paddingLeft: 50,
-    paddingRight: 50,
-    paddingTop: 20,
-    paddingBottom: 20,
   },
   boxContent: {
     flex: 1,
