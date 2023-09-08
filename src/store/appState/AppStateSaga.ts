@@ -37,8 +37,17 @@ function* appStartupSaga() {
   });
 }
 
-function* appSelectLanguageSaga() {
-  console.tron.log!('appSelectLanguageSaga()');
+function* appSelectLanguageSaga({ payload }: ActionPayload) {
+  if (['en', 'vi'].indexOf(payload) < 0) {
+    return;
+  }
+
+  yield put(
+    appStateUpdate({
+      language: payload,
+    }),
+  );
+  i18next.changeLanguage(payload);
 }
 
 function* appEnvRequestSaga() {
