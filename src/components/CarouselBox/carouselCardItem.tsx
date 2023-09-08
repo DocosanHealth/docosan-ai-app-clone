@@ -60,7 +60,7 @@ const StyledBox = styled.View<{ languages: boolean }>`
   column-gap: 15;
   margin-top: ${props => props.languages ? '0' : '10'};
   margin-bottom: 20;
-  alignItems: center;
+  align-items: center;
 `;
 
 const StyledTextFlag = styled.Text<{ languages: boolean }>`
