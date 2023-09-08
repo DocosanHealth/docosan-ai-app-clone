@@ -61,6 +61,7 @@ const StyledBox = styled.View<{ languages: boolean }>`
   margin-top: ${props => props.languages ? '0' : '10'};
   margin-bottom: 20;
   align-items: center;
+  justify-content: center;
 `;
 
 const StyledTextFlag = styled.Text`
@@ -85,6 +86,7 @@ const StyledTextContent = styled.Text<{ languages: boolean }>`
   padding-horizontal: 50;
   padding-top: ${props => props.languages ? '10' : '20'};
   padding-bottom: ${props => props.languages ? '5' : '20'};
+  justify-content: center;
 `;
 
 const StyledTextTitle = styled.Text<{ languages: boolean }>`
@@ -93,7 +95,7 @@ const StyledTextTitle = styled.Text<{ languages: boolean }>`
   font-weight: 700;
   line-height: ${props => props.languages ? '32' : '38'};
   letter-spacing: 0;
-  text-align: left;
+  text-align: center;
   color: #FFFFFF;
   margin-top: 20;
   margin-horizontal: 30;
@@ -122,6 +124,7 @@ const styles = StyleSheet.create({
   },
   boxContent: {
     flex: 1,
+    justifyContent: 'flex-end',
   },
   image: {
     width: 32,
