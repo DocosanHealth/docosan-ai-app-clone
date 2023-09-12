@@ -2,17 +2,25 @@ import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
+import { appSelectLanguageAction } from '@/store/appState/AppStateSaga';
+import { useDispatch } from 'react-redux';
 
 const LanguageSwitcher: React.FC = () => {
 	const actionSheetRef = useRef<ActionSheetRef | null>(null);
   const { t } = useTranslation(['welcome']);
+	const language = useSelector((state: RootState) => state.appState.language);
+	const dispatch = useDispatch();
 
   const handleLanguageChange = (index: number) => {
-    if (index === 0) {
-      // Xử lý chuyển đổi sang Tiếng Anh
-    } else if (index === 1) {
-      // Xử lý chuyển đổi sang Tiếng Việt
-    }
+		if (index === 0) {
+			// Xử lý chuyển đổi sang Tiếng Anh
+			dispatch(appSelectLanguageAction('en'));
+		} else if (index === 1) {
+			// Xử lý chuyển đổi sang Tiếng Việt
+			dispatch(appSelectLanguageAction('vi'));
+		}
     actionSheetRef.current?.setModalVisible(false); // Đóng ActionSheet sau khi chọn
   };
 
@@ -23,9 +31,17 @@ const LanguageSwitcher: React.FC = () => {
   return (
     <View>
 			<TouchableOpacity onPress={showActionSheet} style={styles.dropdown}>
-
-				<Image source={require('theme/assets/images/VN.png')} style={styles.dropdownImage}/>
-				<Text style={styles.dropdownText}>VIE</Text>
+				{language === 'vi' ? (
+					<>
+						<Image source={require('theme/assets/images/VN.png')} style={styles.dropdownImage}/>
+						<Text style={styles.dropdownText}>VIE</Text>
+					</>
+				) : (
+					<>
+						<Image source={require('theme/assets/images/US.png')} style={styles.dropdownImage}/>
+						<Text style={styles.dropdownText}>ENG</Text>
+					</>
+				)}
 
       </TouchableOpacity>
 			<View style={styles.boxDropdown}>

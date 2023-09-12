@@ -31,12 +31,12 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 100,
+    flex: 1,
 
   },
   video: {
     width: Dimensions.get('window').width - 150, // Chiều rộng của video
-    height: Dimensions.get('window').height - 550, // Chiều cao của video
+    height: '100%',
   },
 });
 

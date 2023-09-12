@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
-import CarouselCardItem, { SLIDER_WIDTH, ITEM_WIDTH, ITEM_HEIGHT } from './carouselCardItem';
+import CarouselCardItem, { SLIDER_WIDTH, ITEM_WIDTH } from './carouselCardItem';
 
 const CarouselBox = ({ data, handleLanguageChange }: any ) => {
   const Refcarousel = React.useRef(null);
@@ -66,6 +66,6 @@ const styles = StyleSheet.create({
   boxCarousel: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: ITEM_HEIGHT,
+    flex: 1,
   },
 });
