@@ -7,13 +7,19 @@ import {
   Text,
   View,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '@/hooks';
 import { Colors } from '@/theme';
 import InputPhoneNumber from '@/screens/SLogin/components/InputPhoneNumber';
 import { ButtonBlock } from '@/components';
 import InputCheckbox from '@/screens/SLogin/components/InputCheckbox';
+import { ModalOTP } from '@/screens/SLogin/components/ModalOTP';
+import { TextTitle } from '@/screens/SLogin/components/TextTitle';
+import { Api } from '@/services';
+import LoginContext from './LoginContext';
+import { userLoginAction } from '@/store/user/UserSaga';
+import { RootState } from '@/store';
 
 export type PhoneCodeType = {
   name: string;
@@ -21,51 +27,110 @@ export type PhoneCodeType = {
   img: string;
 };
 
+const api = Api.create();
+
 const SLogin = () => {
   const { t } = useTranslation(['auth']);
-  const dispatch = useDispatch();
   const { Images } = useTheme();
+  const language = useSelector((state: RootState) => state.appState.language);
   const [phoneCode, setPhoneCode] = useState<PhoneCodeType>({
     name: 'Vietnam',
     code: '+84',
     img: 'https://api.docosan.com/images/sms_codes/vn.svg',
   });
-  const [phoneNumber, setPhoneNumber] = useState<string>('');
+  const [phoneNumber, setPhoneNumber] = useState<string>('0974003641');
   const [isChecked, setIsChecked] = useState<boolean>(false);
+  const [loadingType, setLoadingType] = useState<
+    null | 'otp_request' | 'login'
+  >(null);
+  const [isShowOTP, setIsShowOTP] = useState<boolean>(false);
+  const [otp, setOtp] = useState<string>('');
+  const dispatch = useDispatch();
+
+  const onRequestOTP = async () => {
+    setLoadingType('otp_request');
+    setOtp('');
+    try {
+      const { data } = await api.requestOTP({
+        language: language || 'vi',
+        phone_number: phoneNumber,
+        phone_code: phoneCode.code,
+      });
+      console.log(data);
+      setIsShowOTP(true);
+    } catch (e) {
+      console.log(e);
+    }
+    setLoadingType(null);
+  };
+
+  const onLogin = async (_otp: string) => {
+    setLoadingType('login');
+    const onCallback = () => setLoadingType(null);
+    dispatch(
+      userLoginAction({
+        phone_number: phoneNumber,
+        code: _otp,
+        phone_code: phoneCode.code,
+        language: 'vi',
+        is_login: 1,
+        onSuccess: onCallback,
+        onError: onCallback,
+      }),
+    );
+  };
 
   return (
-    <View style={styles.container}>
-      <Image source={Images.mascot} style={styles.imgMascot} />
+    <LoginContext.Provider
+      value={{
+        loadingType,
+        otp,
+        setOtp,
+        onRequestOTP,
+      }}
+    >
+      <View style={styles.container}>
+        <Image source={Images.mascot} style={styles.imgMascot} />
 
-      <Text style={styles.txtLogin}>{t('title_login')}</Text>
+        <TextTitle content={t('title_login')} />
 
-      <InputPhoneNumber
-        phoneNumber={phoneNumber}
-        setPhoneNumber={setPhoneNumber}
-        phoneCode={phoneCode}
-        setPhoneCode={setPhoneCode}
-      />
+        <InputPhoneNumber
+          phoneNumber={phoneNumber}
+          setPhoneNumber={setPhoneNumber}
+          phoneCode={phoneCode}
+          setPhoneCode={setPhoneCode}
+        />
 
-      <Pressable
-        style={styles.btnPolicy}
-        onPress={() => setIsChecked(!isChecked)}
-      >
-        <InputCheckbox isChecked={isChecked} setIsChecked={setIsChecked} />
-        <Text style={styles.txtPolicy}>
-          {t('txt_policy_1')}
-          <Text
-            style={styles.txtPolicyTurquoise}
-            onPress={() =>
-              Linking.openURL('https://www.docosan.com/en/quy-che-hoat-dong')
-            }
-          >
-            {t('txt_policy_2')}
+        <Pressable
+          style={styles.btnPolicy}
+          onPress={() => setIsChecked(!isChecked)}
+        >
+          <InputCheckbox isChecked={isChecked} setIsChecked={setIsChecked} />
+          <Text style={styles.txtPolicy}>
+            {t('txt_policy_1')}
+            <Text
+              style={styles.txtPolicyTurquoise}
+              onPress={() =>
+                Linking.openURL('https://www.docosan.com/en/quy-che-hoat-dong')
+              }
+            >
+              {t('txt_policy_2')}
+            </Text>
           </Text>
-        </Text>
-      </Pressable>
+        </Pressable>
 
-      <ButtonBlock title={t('btn_continue')} />
-    </View>
+        <ButtonBlock
+          title={t('btn_continue')}
+          onPress={onRequestOTP}
+          isLoading={loadingType === 'otp_request'}
+        />
+        <ModalOTP
+          visible={isShowOTP}
+          onRequestClose={() => setIsShowOTP(false)}
+          onOtpFilled={onLogin}
+        />
+      </View>
+    </LoginContext.Provider>
   );
 };
 
@@ -75,16 +140,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.white,
   },
   imgMascot: {
-    width: 320,
-    height: 300,
+    width: 200,
+    height: 200,
     resizeMode: 'contain',
-  },
-  txtLogin: {
-    fontSize: 30,
-    fontWeight: '700',
-    color: Colors.blue,
   },
   btnPolicy: {
     flexDirection: 'row',

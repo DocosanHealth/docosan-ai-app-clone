@@ -19,12 +19,16 @@ import reactotronConfig from '@/services/reactotronConfig';
 
 import theme from './theme';
 import appState from './appState/AppStateRedux';
+import user from './user/UserRedux';
+import chat from './chat/ChatRedux';
 
 const sagaMiddleware = createSagaMiddleware();
 
 const reducers = combineReducers({
   theme,
   appState,
+  user,
+  chat,
 });
 
 const storage = new MMKV();
@@ -46,18 +50,18 @@ export const reduxStorage: Storage = {
 const persistConfig = {
   key: 'root',
   storage: reduxStorage,
-  whitelist: ['theme', 'auth', 'appState'],
+  whitelist: ['theme', 'auth', 'appState', 'user'],
 };
-
 const persistedReducer = persistReducer(persistConfig, reducers);
 
 const store = configureStore({
   reducer: persistedReducer,
   middleware: getDefaultMiddleware => {
     const middlewares = getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
+      // serializableCheck: {
+      //   ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      // },
+      serializableCheck: false,
     })
       // .concat(api.middleware)
       .concat(sagaMiddleware);

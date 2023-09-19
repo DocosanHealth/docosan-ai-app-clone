@@ -2,7 +2,7 @@ import { ThemeVariables } from 'types/theme';
 
 export default function ({}: ThemeVariables) {
   return {
-    logo: require('./assets/images/tom_light.png'),
+    logo: require('./assets/images/docosan-logo.png'),
     mascot: require('./assets/images/mascot.png'),
     sparkles: {
       topLeft: require('./assets/images/sparkles-top-left.png'),
@@ -18,5 +18,6 @@ export default function ({}: ThemeVariables) {
       send: require('./assets/images/send.png'),
       translate: require('./assets/images/translate.png'),
     },
+    otp: require('./assets/images/otp.png'),
   };
 }

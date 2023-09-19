@@ -9,7 +9,8 @@ import { RootState } from '@/store';
 import { getDeviceLanguage } from '@/services/helpers';
 import { appStateUpdate } from '@/store/appState/AppStateRedux';
 import i18next from 'i18next';
-import Api, { ApiResponse } from '@/services/api';
+import Api, { ApiResponse, setToken } from '@/services/api';
+import { reset } from '@/services';
 
 const api = Api.create();
 function* appStartupSaga() {
@@ -31,6 +32,14 @@ function* appStartupSaga() {
     }
   }
   i18next.changeLanguage(_appLanguage);
+
+  const token: string = yield select((state: RootState) => state.user.token);
+  let _targetScreen = 'SWelcome';
+  if (token) {
+    yield call(setToken, token);
+    _targetScreen = 'SChat';
+  }
+  yield call(reset, _targetScreen);
 
   yield put({
     type: APP_STATE_ENV_REQUEST_SAGA,

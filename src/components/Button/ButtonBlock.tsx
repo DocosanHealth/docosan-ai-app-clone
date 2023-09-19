@@ -1,18 +1,35 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import { Colors } from '@/theme';
 import { ButtonProps } from '@/components/Button/types';
+import LinearGradient from 'react-native-linear-gradient';
 
 export default (props: ButtonProps) => {
-  const { title, onPress } = props;
+  const { title, onPress, isLoading } = props;
   return (
-    <TouchableOpacity
+    <LinearGradient
+      colors={['#4AC0A4', '#70BDE9']}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
       style={styles.container}
-      onPress={onPress}
-      activeOpacity={0.8}
     >
-      {!!title && <Text style={styles.txtTitle}>{title}</Text>}
-    </TouchableOpacity>
+      {!isLoading && (
+        <TouchableOpacity
+          onPress={onPress}
+          activeOpacity={0.8}
+          style={styles.btnButton}
+        >
+          {!!title && <Text style={styles.txtTitle}>{title}</Text>}
+        </TouchableOpacity>
+      )}
+
+      {isLoading && <ActivityIndicator size="small" color={Colors.white} />}
+    </LinearGradient>
   );
 };
 
@@ -24,9 +41,14 @@ const styles = StyleSheet.create({
     height: COMPONENT_HEIGHT,
     borderRadius: 16,
     overflow: 'hidden',
-    backgroundColor: Colors.turquoise,
     alignItems: 'center',
+    justifyContent: 'center',
     marginVertical: 8,
+  },
+  btnButton: {
+    width: '100%',
+    height: COMPONENT_HEIGHT,
+    alignItems: 'center',
     justifyContent: 'center',
   },
   txtTitle: {

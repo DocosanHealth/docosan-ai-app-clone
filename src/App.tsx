@@ -5,6 +5,7 @@ import { PersistGate } from 'redux-persist/lib/integration/react';
 import { store, persistor } from './store';
 import ApplicationNavigator from './navigators/Application';
 import './translations';
+import './services/ignoreWarnings';
 
 const App = () => (
   <Provider store={store}>

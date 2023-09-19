@@ -1,9 +1,20 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 
+let _token: string | null = null;
 export type ApiResponse = AxiosResponse<any> & {
   ok: boolean;
   data?: any;
   extraData?: object;
+};
+
+export const setToken = (token: string | null) => (_token = token);
+const transformRequest = (config: any) => {
+  const _config = { ...config };
+  console.log({ _token });
+  if (_token) {
+    _config.headers.Authorization = `Bearer ${_token}`;
+  }
+  return _config;
 };
 
 const transformResponse = (response: AxiosResponse): ApiResponse => {
@@ -49,25 +60,39 @@ const create = () => {
   };
 
   const _api = axios.create({
-    baseURL: 'https://api.docosan.com/api',
+    // baseURL: 'https://api.docosan.com/api',
+    // baseURL: 'https://develop.docosan.com/test/api',
+    baseURL: 'https://develop.docosan.com/thanh/api',
     headers,
-    timeout: 20000, // 20s
+    timeout: 120000, // 2minutes
   });
-  // _api.interceptors.request.use(transformRequest);
+  _api.interceptors.request.use(transformRequest);
   _api.interceptors.response.use(transformResponse, transformError);
 
-  const login = (payload: any) => _api.post('login', payload);
+  const login = (payload: {
+    phone_code: string;
+    phone_number: string;
+    code: string;
+    language: string;
+  }) => _api.post('verify-otp', payload);
+  const requestOTP = (payload: {
+    language: 'vi' | 'en';
+    phone_code: string;
+    phone_number: string;
+  }) => _api.post('register-otp', payload);
 
   const logout = (payload: any) => _api.post(`logout${serialize(payload)}`);
 
-  /* environment */
   const getEnvironment = () => _api.get<ApiResponse>('diseases');
-  /* end environment */
+  const sendMessage = (payload: any) =>
+    _api.post<ApiResponse>('patients/chat-gpt', payload);
 
   return {
     login,
+    requestOTP,
     logout,
     getEnvironment,
+    sendMessage,
   };
 };
 

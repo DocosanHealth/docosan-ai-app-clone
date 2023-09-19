@@ -5,23 +5,23 @@ import {
   Platform,
   Pressable,
   SafeAreaView,
-  StatusBar,
-  TouchableWithoutFeedback,
-} from 'react-native';
+  StatusBar, View
+} from "react-native";
 import { createStackNavigator } from '@react-navigation/stack';
 import {
   NavigationContainer,
   useNavigationContainerRef,
 } from '@react-navigation/native';
-import { Startup } from '../screens';
 import { useTheme } from '../hooks';
 import MainNavigator from './Main';
 import { useFlipper } from '@react-navigation/devtools';
 import { ApplicationStackParamList } from 'types/navigation';
-import { SWelcome, SLogin } from '@/screens';
+import { SWelcome, SLogin, SChat, Startup } from '@/screens';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { appStartupAction } from '@/store/appState/AppStateSaga';
+import Toast from 'react-native-toast-message';
+import { setNavigationRef } from '@/services/navigationService';
 
 const Stack = createStackNavigator<ApplicationStackParamList>();
 
@@ -48,22 +48,29 @@ const ApplicationNavigator = () => {
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={[Layout.fill, { backgroundColor: colors.card }]}
+        onTouchStart={Keyboard.dismiss}
       >
-        <Pressable
-          onPress={Keyboard.dismiss}
-          style={[Layout.fill]}
-        >
-          <NavigationContainer theme={NavigationTheme} ref={navigationRef}>
+        {/*<View onTouchStart={() => console.log(3333)} style={Layout.fill}>*/}
+          <NavigationContainer
+            theme={NavigationTheme}
+            ref={navigationRef}
+            onReady={() => {
+              setNavigationRef(navigationRef);
+            }}
+          >
             <StatusBar barStyle={darkMode ? 'light-content' : 'dark-content'} />
             <Stack.Navigator screenOptions={{ headerShown: false }}>
-              {/*<Stack.Screen name="Startup" component={Startup} />*/}
+              <Stack.Screen name="Startup" component={Startup} />
               <Stack.Screen name="SLogin" component={SLogin} />
               <Stack.Screen name="SWelcome" component={SWelcome} />
               <Stack.Screen name="Main" component={MainNavigator} />
+              <Stack.Screen name="SChat" component={SChat} />
             </Stack.Navigator>
           </NavigationContainer>
-        </Pressable>
+        {/*</View>*/}
       </KeyboardAvoidingView>
+
+      <Toast />
     </SafeAreaView>
   );
 };

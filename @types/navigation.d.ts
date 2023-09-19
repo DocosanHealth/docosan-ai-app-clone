@@ -10,6 +10,7 @@ export type ApplicationStackParamList = {
   Main: NavigatorScreenParams<MainParamsList>;
   SWelcome: undefined;
   SLogin: undefined;
+  SChat: undefined;
 };
 
 export type ApplicationScreenProps =
