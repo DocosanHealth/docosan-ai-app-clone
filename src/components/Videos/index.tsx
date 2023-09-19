@@ -6,8 +6,11 @@ interface VideoListProps {
   videoUrls: string | undefined;
   hasVideo: boolean;
   poster: string | undefined;
+  controls: boolean;
+  paused: boolean;
+  resizeModeVideo: any;
 }
-const Videos: React.FC<VideoListProps> = ({ videoUrls, hasVideo, poster }) => {
+const Videos: React.FC<VideoListProps> = ({ videoUrls, hasVideo, poster, controls, paused, resizeModeVideo }) => {
   const videoRef = useRef<Video>(null);
 
   return (
@@ -17,9 +20,9 @@ const Videos: React.FC<VideoListProps> = ({ videoUrls, hasVideo, poster }) => {
           ref={videoRef}
           source={{ uri: videoUrls }} // Thay thế URL bằng đường dẫn đến video của bạn
           style={styles.video}
-          controls={false} // Hiển thị điều khiển video
-          resizeMode="contain" // Chế độ hiển thị video
-          paused={false} // Dừng video khi component được tạo
+          controls={controls} // Hiển thị điều khiển video
+          resizeMode={resizeModeVideo} // Chế độ hiển thị video
+          paused={paused} // Dừng video khi component được tạo
           poster={poster}
         />
       ) : null}
@@ -32,9 +35,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
-
   },
   video: {
+    marginVertical: 10,
     width: Dimensions.get('window').width - 150, // Chiều rộng của video
     height: '100%',
   },

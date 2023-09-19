@@ -42,7 +42,6 @@ const LanguageSwitcher: React.FC = () => {
 						<Text style={styles.dropdownText}>ENG</Text>
 					</>
 				)}
-
       </TouchableOpacity>
 			<View style={styles.boxDropdown}>
 				<ActionSheet ref={actionSheetRef}>
@@ -59,7 +58,7 @@ const LanguageSwitcher: React.FC = () => {
 								Tiếng Việt
 							</Text>
 						</TouchableOpacity>
-						<TouchableOpacity onPress={() => actionSheetRef.current?.setModalVisible(false)}>
+						<TouchableOpacity style={styles.boxCancel} onPress={() => actionSheetRef.current?.setModalVisible(false)}>
 							<Text style={[styles.boxText, styles.boxText__cancel]}>{t('cancel')}</Text>
 							</TouchableOpacity>
 					</View>
@@ -99,6 +98,7 @@ const styles = StyleSheet.create({
 		fontFamily: 'Inter',
 		fontWeight: 'bold',
 		lineHeight: 30,
+		fontSize: 20,
 	},
 	boxText__cancel: {
 		color: '#f00',
@@ -109,14 +109,18 @@ const styles = StyleSheet.create({
 	},
 	boxItem: {
 		display: 'flex',
-		columnGap: 10,
+		columnGap: 20,
 		flexDirection: 'row',
 		alignItems: 'center',
 		justifyContent: 'flex-start',
-		paddingHorizontal: '40%',
+		paddingHorizontal: '35%',
+		paddingVertical: 10,
+	},
+	boxCancel: {
+		paddingVertical: 4,
 	},
 	box: {
 		marginBottom: 10,
-		paddingTop: 10,
+		paddingTop: 20,
 	},
 });

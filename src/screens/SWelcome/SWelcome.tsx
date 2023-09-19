@@ -14,6 +14,9 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
+import { Colors } from '@/theme';
+import { Icon } from '@/components/Icon/Icon';
+import { faArrowRight } from '@fortawesome/pro-light-svg-icons';
 
 const SWelcome = () => {
   const { t } = useTranslation(['example', 'welcome']);
@@ -30,17 +33,18 @@ const SWelcome = () => {
           : `${require('theme/assets/images/Home-vn.png')}`,
       language: true,
       hasVideo: false,
+      resizeMode: 'contain',
     },
     {
       id: 2,
-      title1: t('welcome:ask'),
-      titleColor: t('welcome:dr_an'),
-      title2: t('welcome:about_any_medical_issue'),
-      videoUrl:
-        'https://develop.docosan.com/trong/images/videos/b6000/video.mp4',
-      poster:
-        'https://dev.docosan.com/_next/image?url=https%3A%2F%2Fdevelop.docosan.com%2Ftrong%2Fimages%2Fvideos%2Fb6000%2Fthumb_vi.jpg&w=1920&q=75',
-      title: true,
+      // title1: t('welcome:ask'),
+      // titleColor: t('welcome:dr_an'),
+      // title2: t('welcome:about_any_medical_issue'),
+      imgUrl:
+        language === 'en'
+          ? `${require('theme/assets/images/Onboarding2_us.png')}`
+          : `${require('theme/assets/images/Onboarding2_vn.png')}`,
+      language: true,
       hasVideo: true,
     },
     {
@@ -52,6 +56,7 @@ const SWelcome = () => {
       textFlagUS: t('welcome:tailored_for_vietnam'),
       title: true,
       hasVideo: false,
+      imgUrlSlider3: `${require('theme/assets/images/Onboarding3.png')}`,
     },
     {
       id: 4,
@@ -97,16 +102,22 @@ const SWelcome = () => {
           handleLanguageChange={handleLanguageChange}
         />
         <View style={styles.containerBoxText}>
-          <LinearGradient
-            colors={['#4AC0A4', '#70BDE9']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={styles.button}
-          >
-            <Pressable onPress={onNavigateToChat}>
+          <Pressable onPress={onNavigateToChat}>
+            <LinearGradient
+              colors={['#4AC0A4', '#70BDE9']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={styles.button}
+            >
               <Text style={styles.buttonText}>{t('welcome:start_chat')}</Text>
-            </Pressable>
-          </LinearGradient>
+              <Icon
+                icon={faArrowRight}
+                color={Colors.white}
+                size={22}
+                style={styles.iconInfo}
+              />
+            </LinearGradient>
+          </Pressable>
           <StyledView languages={language === 'vi'}>
             <Text style={[styles.boxText__1, styles.styleText]}>
               {t('welcome:by_proceeding_you_accept_our')}
@@ -172,16 +183,17 @@ const styles = StyleSheet.create({
     color: '#333333',
   },
   button: {
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 32,
     borderRadius: 20,
     elevation: 3,
     backgroundColor: 'green',
     marginLeft: 30,
     marginRight: 30,
     height: 65,
+    padding: 0,
+    position: 'relative',
   },
   buttonText: {
     color: 'white',
@@ -213,5 +225,9 @@ const styles = StyleSheet.create({
   boxText__link__2: {
     color: '#1E516F',
     textDecorationLine: 'underline',
+  },
+  iconInfo: {
+    position: 'absolute',
+    right: 20,
   },
 });

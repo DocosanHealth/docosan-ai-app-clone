@@ -25,6 +25,10 @@ const CarouselBox = ({ data, handleLanguageChange }: any ) => {
       padding: 0,
       marginBottom: 0,
   };
+  const containerStyle =
+    {
+      paddingVertical: 18,
+    };
   const renderCarouselItem = ({ item, index }: any) => {
     return (
       <CarouselCardItem
@@ -55,6 +59,7 @@ const CarouselBox = ({ data, handleLanguageChange }: any ) => {
         inactiveDotOpacity={0.4}
         inactiveDotScale={0.6}
         dotContainerStyle={dotContainerStyle}
+        containerStyle={containerStyle}
       />
     </View>
   );

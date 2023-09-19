@@ -15,28 +15,43 @@ const CarouselCardItem = ({ item, index, activeIndex }: any) => {
   return (
     <View style={styles.container} key={index}>
       <LanguageSwitcher />
-      {item?.language === true ? (
+      {item?.language === true && item?.imgUrl ? (
         <View style={styles.boxImage}>
-          <Image
-            source={item.imgUrl}
-            style={styles.imageLogo}
+          <StyledImage
+            source={item?.imgUrl}
+            // style={styles.imageLogo}
+            resizeMode={item?.resizeMode}
           />
         </View>
       ) : null}
-      {/* {index === 2 ? <Text style={styles.header}>app</Text> : null} */}
+      {item?.imgUrlSlider3 ? (
+        <View style={styles.boxImage}>
+          <Image
+            source={item.imgUrlSlider3}
+            style={styles.imageLogoSlider3}
+          />
+        </View>
+      ) : null}
       {item?.videoUrl && activeIndex === index ? (
-        <Videos videoUrls={item?.videoUrl}  hasVideo={item?.hasVideo} poster={item?.poster}/>
+        <Videos
+          videoUrls={item?.videoUrl}
+          hasVideo={item?.hasVideo}
+          poster={item?.poster}
+          controls={false}
+          paused={false}
+          resizeModeVideo="contain"
+        />
       ) : null}
       {item?.textFlagVN && item?.content ? (
         <View style={styles.boxContent}>
           <>
             <StyledBox languages={language === 'vi' ? true : false}>
               <Image source={require('theme/assets/images/US.png')} style={styles.image} />
-              <StyledTextFlag>{item?.textFlagVN}</StyledTextFlag>
+              <StyledTextFlag languages={language === 'vi'}>{item?.textFlagVN}</StyledTextFlag>
             </StyledBox>
             <StyledBox languages={language === 'vi' ? true : false}>
               <Image source={require('theme/assets/images/VN.png')} style={styles.image} />
-              <StyledTextFlag>{item?.textFlagUS}</StyledTextFlag>
+              <StyledTextFlag languages={language === 'vi'}>{item?.textFlagUS}</StyledTextFlag>
             </StyledBox>
           </>
           <StyledTextContent languages={language === 'vi' ? true : false}>{item?.content}</StyledTextContent>
@@ -53,22 +68,27 @@ const CarouselCardItem = ({ item, index, activeIndex }: any) => {
   );
 };
 
+const StyledImage = styled.Image<{ resizeMode: any }>`
+  align-self: center;
+  resize-mode: ${props => props.resizeMode ? props.resizeMode : 'cover'};
+  width: 100%;
+  height: 100%;
+`;
 
 const StyledBox = styled.View<{ languages: boolean }>`
   flex-direction: row;
-  margin-horizontal: 80;
-  column-gap: 15;
-  margin-top: ${props => props.languages ? '0' : '10'};
-  margin-bottom: 20;
+  margin-horizontal: 80px;
+  column-gap: 20px;
+  margin-bottom: 10px;
   align-items: center;
   justify-content: center;
 `;
 
-const StyledTextFlag = styled.Text`
+const StyledTextFlag = styled.Text<{ languages: boolean }>`
   font-family: Inter;
   font-weight: 600;
-  line-height: 24;
-  font-size: 16;
+  line-height: ${props => props.languages ? '18px' : '24px'};
+  font-size: 16px;
   letter-spacing: 0;
   text-align: left;
   color: #FFFFFF;
@@ -77,28 +97,26 @@ const StyledTextFlag = styled.Text`
 const StyledTextContent = styled.Text<{ languages: boolean }>`
   font-family: Inter;
   font-weight: 500;
-  line-height: 24;
-  font-size: 16;
+  line-height: 24px;
+  font-size: 17px;
   letter-spacing: 0;
-  text-align: left;
+  text-align: center;
   color: #FFFFFF;
   align-self: center;
-  padding-horizontal: 50;
-  padding-top: ${props => props.languages ? '10' : '20'};
-  padding-bottom: ${props => props.languages ? '5' : '20'};
   justify-content: center;
+  padding-horizontal: 30px;
 `;
 
 const StyledTextTitle = styled.Text<{ languages: boolean }>`
   font-family: Inter;
-  font-size: ${props => props.languages ? '26' : '32'};
+  font-size: ${props => props.languages ? '26px' : '32px'};
   font-weight: 700;
-  line-height: ${props => props.languages ? '32' : '38'};
+  line-height: ${props => props.languages ? '32px' : '38px'};
   letter-spacing: 0;
   text-align: center;
   color: #FFFFFF;
-  margin-top: 20;
-  margin-horizontal: 30;
+  margin-top: 20px;
+  margin-horizontal: 30px;
 `;
 
 const styles = StyleSheet.create({
@@ -107,13 +125,11 @@ const styles = StyleSheet.create({
     width: ITEM_WIDTH,
     flex: 1,
   },
-  imageLogo: {
+  imageLogoSlider3: {
     alignSelf: 'center',
     resizeMode: 'contain',
-    width: ITEM_WIDTH - 60,
-    height: '90%',
-
-    // flex: 1,
+    width: '100%',
+    height: '100%',
   },
   boxImage: {
     flex: 1,
@@ -124,7 +140,7 @@ const styles = StyleSheet.create({
   },
   boxContent: {
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
   },
   image: {
     width: 32,
