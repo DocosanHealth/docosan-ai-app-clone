@@ -46,7 +46,7 @@ const SWelcome = () => {
         //   : `${require('theme/assets/images/Onboarding2_vn.png')}`,
       language: true,
       hasVideo: true,
-      // title: true,
+      title: true,
     },
     {
       id: 3,
