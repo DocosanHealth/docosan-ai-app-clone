@@ -37,15 +37,16 @@ const SWelcome = () => {
     },
     {
       id: 2,
-      // title1: t('welcome:ask'),
-      // titleColor: t('welcome:dr_an'),
-      // title2: t('welcome:about_any_medical_issue'),
-      imgUrl:
-        language === 'en'
-          ? `${require('theme/assets/images/Onboarding2_us.png')}`
-          : `${require('theme/assets/images/Onboarding2_vn.png')}`,
+      title1: t('welcome:ask'),
+      titleColor: t('welcome:dr_an'),
+      title2: t('welcome:about_any_medical_issue'),
+      imgUrl: `${require('theme/assets/images/Onboarding2.png')}`,
+        // language === 'en'
+        //   ? `${require('theme/assets/images/Onboarding2_us.png')}`
+        //   : `${require('theme/assets/images/Onboarding2_vn.png')}`,
       language: true,
       hasVideo: true,
+      // title: true,
     },
     {
       id: 3,
@@ -63,9 +64,9 @@ const SWelcome = () => {
       titleColor: t('welcome:accurate'),
       title2: t('welcome:doctor_approved_technology'),
       videoUrl:
-        'https://develop.docosan.com/trong/images/videos/b6000/video.mp4',
+        'https://api.docosan.com/images/videos/a8309/video.mp4',
       poster:
-        'https://dev.docosan.com/_next/image?url=https%3A%2F%2Fdevelop.docosan.com%2Ftrong%2Fimages%2Fvideos%2Fb6000%2Fthumb_vi.jpg&w=1920&q=75',
+        'https://www.docosan.com/_next/image?url=https%3A%2F%2Fapi.docosan.com%2Fimages%2Fvideos%2Fa8309%2Fthumb_vi.jpg&w=3840&q=75',
       title: true,
       hasVideo: true,
     },
