@@ -29,8 +29,8 @@ const SWelcome = () => {
       id: 1,
       imgUrl:
         language === 'en'
-          ? `${require('theme/assets/images/Home-us.png')}`
-          : `${require('theme/assets/images/Home-vn.png')}`,
+          ? require('theme/assets/images/Home-us.png')
+          : require('theme/assets/images/Home-vn.png'),
       language: true,
       hasVideo: false,
       resizeMode: 'contain',
@@ -40,10 +40,10 @@ const SWelcome = () => {
       title1: t('welcome:ask'),
       titleColor: t('welcome:dr_an'),
       title2: t('welcome:about_any_medical_issue'),
-      imgUrl: `${require('theme/assets/images/Onboarding2.png')}`,
-        // language === 'en'
-        //   ? `${require('theme/assets/images/Onboarding2_us.png')}`
-        //   : `${require('theme/assets/images/Onboarding2_vn.png')}`,
+      imgUrl: require('theme/assets/images/Onboarding2.png'),
+      // language === 'en'
+      //   ? `${require('theme/assets/images/Onboarding2_us.png')}`
+      //   : `${require('theme/assets/images/Onboarding2_vn.png')}`,
       language: true,
       hasVideo: true,
       title: true,
@@ -57,14 +57,13 @@ const SWelcome = () => {
       textFlagUS: t('welcome:tailored_for_vietnam'),
       title: true,
       hasVideo: false,
-      imgUrlSlider3: `${require('theme/assets/images/Onboarding3.png')}`,
+      imgUrlSlider3: require('theme/assets/images/Onboarding3.png'),
     },
     {
       id: 4,
       titleColor: t('welcome:accurate'),
       title2: t('welcome:doctor_approved_technology'),
-      videoUrl:
-        'https://api.docosan.com/images/videos/a8309/video.mp4',
+      videoUrl: 'https://api.docosan.com/images/videos/a8309/video.mp4',
       poster:
         'https://www.docosan.com/_next/image?url=https%3A%2F%2Fapi.docosan.com%2Fimages%2Fvideos%2Fa8309%2Fthumb_vi.jpg&w=3840&q=75',
       title: true,

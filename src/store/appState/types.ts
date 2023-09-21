@@ -8,6 +8,14 @@ export type AppStateType = {
     country: string;
     img: string;
   }>;
+  actionSheet: {
+    visible: boolean;
+    title?: string;
+    options: Array<{
+      title: string;
+      onPress: () => void;
+    }>;
+  };
 };
 
 export type AppStatePayload = {

@@ -24,3 +24,4 @@ export type LoginPayload = {
   onError?: () => any;
 };
 export const USER_LOGIN_REQUEST_SAGA = 'USER_LOGIN_REQUEST_SAGA';
+export const USER_LOGOUT_REQUEST_SAGA = 'USER_LOGOUT_REQUEST_SAGA';

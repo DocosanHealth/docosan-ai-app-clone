@@ -3,10 +3,16 @@ import { ApiResponse } from '@/services/api';
 import { CHAT_SEND_MESSAGE_REQUEST_SAGA } from '@/store/chat/types';
 import { Api } from '@/services';
 import { ActionPayload } from '@/store/types';
-import { chatAdd } from '@/store/chat/ChatRedux';
+import {
+  chatAdd,
+  chatUpdateConversationId,
+  chatUpdateLoading,
+} from '@/store/chat/ChatRedux';
 import { RootState } from '@/store';
 import { UserProfile } from '@/store/user/types';
 import { MessageType } from '@/components/Chat/types';
+import DeviceInfo from 'react-native-device-info';
+import { Alert } from "react-native";
 
 const api = Api.create();
 
@@ -15,6 +21,13 @@ function* chatSendMessageRequestSaga({ payload }: ActionPayload) {
     const currentUser: UserProfile = yield select(
       (state: RootState) => state.user.profile,
     );
+    const conversationId: number | null = yield select(
+      (state: RootState) => state.chat.conversationId || null,
+    );
+    const language: number | null = yield select(
+      (state: RootState) => state.appState.language || 'vi',
+    );
+    const deviceUniqueId: string = yield call(DeviceInfo.getUniqueId);
 
     yield put(
       chatAdd({
@@ -28,6 +41,7 @@ function* chatSendMessageRequestSaga({ payload }: ActionPayload) {
         },
       }),
     );
+    yield put(chatUpdateLoading(true));
 
     let history: Array<MessageType> = yield select(
       (state: RootState) => state.chat.messages || [],
@@ -39,6 +53,9 @@ function* chatSendMessageRequestSaga({ payload }: ActionPayload) {
 
     const _apiPayload = {
       message: JSON.stringify(_messages),
+      conversation_id: conversationId,
+      language,
+      device_id: deviceUniqueId,
     };
 
     const response: ApiResponse = yield call(api.sendMessage, _apiPayload);
@@ -55,8 +72,15 @@ function* chatSendMessageRequestSaga({ payload }: ActionPayload) {
           },
         }),
       );
+      if (response.data?.conversation_id) {
+        yield put(chatUpdateConversationId(response.data?.conversation_id));
+      }
     }
-  } catch (e) {}
+  } catch (e) {
+    Alert.alert('Error', e.message);
+  }
+
+  yield put(chatUpdateLoading(false));
 }
 
 export default function* watchChat() {

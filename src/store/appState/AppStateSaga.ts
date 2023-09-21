@@ -35,6 +35,7 @@ function* appStartupSaga() {
 
   const token: string = yield select((state: RootState) => state.user.token);
   let _targetScreen = 'SWelcome';
+  // let _targetScreen = 'SChat';
   if (token) {
     yield call(setToken, token);
     _targetScreen = 'SChat';

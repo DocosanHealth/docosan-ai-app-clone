@@ -30,6 +30,7 @@ export const ModalOTP = ({ visible, onRequestClose, onOtpFilled }: props) => {
       onDismiss={onRequestClose}
       animationIn={'slideInUp'}
       animationOut={'slideOutDown'}
+      avoidKeyboard={true}
       style={styles.container}
     >
       <Image source={Images.otp} style={styles.imgMascot} />

@@ -38,7 +38,7 @@ const SLogin = () => {
     code: '+84',
     img: 'https://api.docosan.com/images/sms_codes/vn.svg',
   });
-  const [phoneNumber, setPhoneNumber] = useState<string>('0974003641');
+  const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [loadingType, setLoadingType] = useState<
     null | 'otp_request' | 'login'
@@ -48,6 +48,9 @@ const SLogin = () => {
   const dispatch = useDispatch();
 
   const onRequestOTP = async () => {
+    if (!isChecked) {
+      return;
+    }
     setLoadingType('otp_request');
     setOtp('');
     try {
@@ -56,7 +59,16 @@ const SLogin = () => {
         phone_number: phoneNumber,
         phone_code: phoneCode.code,
       });
-      console.log(data);
+      if (data.code) {
+        const _codes = data.code + '';
+        // loop through each character in the code
+        for (let i = 0; i < _codes.length; i++) {
+          // add each character to the otp
+          setTimeout(() => {
+            setOtp(prev => prev + _codes[i]);
+          }, i * 1000);
+        }
+      }
       setIsShowOTP(true);
     } catch (e) {
       console.log(e);
@@ -123,6 +135,7 @@ const SLogin = () => {
           title={t('btn_continue')}
           onPress={onRequestOTP}
           isLoading={loadingType === 'otp_request'}
+          disabled={!isChecked}
         />
         <ModalOTP
           visible={isShowOTP}

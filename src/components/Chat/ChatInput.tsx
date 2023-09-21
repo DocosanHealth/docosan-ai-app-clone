@@ -3,6 +3,7 @@ import { StyleSheet, TextInput, View } from 'react-native';
 import { ButtonIcon } from '@/components';
 import { faSend } from '@fortawesome/pro-light-svg-icons';
 import { Colors } from '@/theme';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   onSend: (content: string) => void;
@@ -10,6 +11,7 @@ type Props = {
 export function ChatInput(props: Props) {
   const { onSend } = props;
   const [content, setContent] = useState('');
+  const { t } = useTranslation(['chat']);
 
   const _onSend = () => {
     onSend(content);
@@ -19,7 +21,7 @@ export function ChatInput(props: Props) {
   return (
     <View style={styles.container}>
       <TextInput
-        placeholder={'Ask me anything'}
+        placeholder={t('placeholder_chat_input')}
         placeholderTextColor={Colors.gray}
         style={styles.inputChat}
         multiline={false}

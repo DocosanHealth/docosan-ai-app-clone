@@ -1,18 +1,49 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Alert, StyleSheet, View } from 'react-native';
 import { Chat, Header } from '@/components';
 import { Colors } from '@/theme';
 import { ChatInput } from '@/components/Chat/ChatInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { chatSendMessageAction } from '@/store/chat/ChatSaga';
+import { useTranslation } from 'react-i18next';
+import { navigate } from '@/services';
 
 export default function SChat() {
-  const { messages = [] } = useSelector((state: RootState) => state.chat);
-  const selfProfile = useSelector((state: RootState) => state.user.profile);
+  const { messages = [], isLoading } = useSelector(
+    (state: RootState) => state.chat,
+  );
+  const selfProfile = useSelector(
+    (state: RootState) => state.user.profile || {},
+  );
+  const isLogged: boolean = useSelector(
+    (state: RootState) => !!state.user.token,
+  );
+  const { t } = useTranslation(['chat']);
   const dispatch = useDispatch();
 
   const onSend = (messageContent: string) => {
+    if (!messageContent) {
+      return;
+    }
+
+    if (
+      !isLogged &&
+      messages.filter(item => Number(item.user.id) === 0).length >= 5
+    ) {
+      return Alert.alert(
+        t('alert_title_over_limit'),
+        t('alert_message_over_limit'),
+        [
+          {
+            text: t('btn_ok'),
+            onPress: () => {
+              navigate('SLogin');
+            },
+          },
+        ],
+      );
+    }
     dispatch(chatSendMessageAction(messageContent));
   };
 
@@ -27,6 +58,7 @@ export default function SChat() {
           name: selfProfile?.name || '',
           avatar: selfProfile?.avatar || '',
         }}
+        isLoading={isLoading}
       />
 
       <ChatInput onSend={onSend} />

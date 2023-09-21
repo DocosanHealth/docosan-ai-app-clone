@@ -7,11 +7,18 @@ const appState = createSlice({
     status: '',
     language: undefined,
     phoneCodes: [],
+    actionSheet: {
+      visible: false,
+      title: '',
+      options: [],
+    },
   } as AppStateType,
   reducers: {
     appStateUpdate: (
       state,
-      { payload: { status, language, phoneCodes } }: AppStatePayload,
+      {
+        payload: { status, language, phoneCodes, actionSheet },
+      }: AppStatePayload,
     ) => {
       if (status) {
         state.status = status;
@@ -21,6 +28,9 @@ const appState = createSlice({
       }
       if (phoneCodes) {
         state.phoneCodes = phoneCodes;
+      }
+      if (actionSheet) {
+        state.actionSheet = actionSheet;
       }
     },
   },

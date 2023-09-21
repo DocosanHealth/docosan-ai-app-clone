@@ -9,10 +9,10 @@ const userState = createSlice({
   } as UserType,
   reducers: {
     userUpdate: (state, { payload: { token, profile } }: userPayload) => {
-      if (token) {
+      if (token !== undefined) {
         state.token = token;
       }
-      if (profile) {
+      if (profile !== undefined) {
         state.profile = profile;
       }
     },

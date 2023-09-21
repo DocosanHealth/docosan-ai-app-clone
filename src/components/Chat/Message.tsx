@@ -2,17 +2,29 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { MessageType } from '@/components/Chat/types';
 import { Colors } from '@/theme';
+import { Typewriter } from '@/components/Text';
+import { Avatar } from '@/components/Chat/Avatar';
+import { useTheme } from '@/hooks';
 
 export default function Message(props: MessageType) {
   const { content, isSelf } = props;
+  const { Images } = useTheme();
 
   return (
     <View style={isSelf ? styles.containerRight : styles.containerLeft}>
+      {!isSelf && <Avatar source={Images.mascot} />}
+
       <View style={isSelf ? styles.viewBubbleRight : styles.viewBubbleLeft}>
-        {content && (
-          <Text style={isSelf ? styles.txtContentLeft : styles.txtContentRight}>
-            {content}
-          </Text>
+        {content && isSelf && (
+          <Text style={styles.txtContentRight}>{content}</Text>
+        )}
+
+        {content && !isSelf && (
+          <Typewriter
+            style={styles.txtContentLeft}
+            delay={200}
+            text={content}
+          />
         )}
       </View>
     </View>
@@ -22,7 +34,7 @@ export default function Message(props: MessageType) {
 const styles = StyleSheet.create({
   containerLeft: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'flex-start',
   },
   containerRight: {
@@ -39,7 +51,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 2,
-    maxWidth: '90%',
+    maxWidth: '80%',
   },
   viewBubbleRight: {
     backgroundColor: Colors.blue,
@@ -48,11 +60,11 @@ const styles = StyleSheet.create({
     maxWidth: '90%',
   },
   txtContentLeft: {
-    color: Colors.white,
+    color: Colors.black,
     fontSize: 14,
   },
   txtContentRight: {
-    color: Colors.black,
+    color: Colors.white,
     fontSize: 14,
   },
 });

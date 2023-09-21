@@ -15,7 +15,7 @@ const CarouselCardItem = ({ item, index, activeIndex }: any) => {
   return (
     <View style={styles.container} key={index}>
       <LanguageSwitcher />
-      {item?.language === true && item?.imgUrl ? (
+      {item?.language === true && !!item?.imgUrl ? (
         <View style={styles.boxImage}>
           <StyledImage
             source={item?.imgUrl}
@@ -26,10 +26,7 @@ const CarouselCardItem = ({ item, index, activeIndex }: any) => {
       ) : null}
       {item?.imgUrlSlider3 ? (
         <View style={styles.boxImage}>
-          <Image
-            source={item.imgUrlSlider3}
-            style={styles.imageLogoSlider3}
-          />
+          <Image source={item.imgUrlSlider3} style={styles.imageLogoSlider3} />
         </View>
       ) : null}
       {item?.videoUrl && activeIndex === index ? (

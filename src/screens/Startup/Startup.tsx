@@ -1,9 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { useTheme } from '../../hooks';
 import { Brand } from '../../components';
-import { setDefaultTheme } from '@/store/theme';
-import { ApplicationScreenProps } from 'types/navigation';
 
 const Startup = () => {
   const { Layout, Gutters } = useTheme();

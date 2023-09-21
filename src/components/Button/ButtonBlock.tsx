@@ -10,10 +10,10 @@ import { ButtonProps } from '@/components/Button/types';
 import LinearGradient from 'react-native-linear-gradient';
 
 export default (props: ButtonProps) => {
-  const { title, onPress, isLoading } = props;
+  const { title, onPress, isLoading, disabled = false } = props;
   return (
     <LinearGradient
-      colors={['#4AC0A4', '#70BDE9']}
+      colors={!disabled ? ['#4AC0A4', '#70BDE9'] : ['#BDBDBD', '#BDBDBD']}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
       style={styles.container}

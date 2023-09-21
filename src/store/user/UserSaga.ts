@@ -1,8 +1,12 @@
 import { Alert } from 'react-native';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { ApiResponse } from '@/services/api';
-import { LoginPayload, USER_LOGIN_REQUEST_SAGA } from '@/store/user/types';
-import { Api, reset } from "@/services";
+import {
+  LoginPayload,
+  USER_LOGIN_REQUEST_SAGA,
+  USER_LOGOUT_REQUEST_SAGA,
+} from '@/store/user/types';
+import { Api, reset } from '@/services';
 import { ActionPayload } from '@/store/types';
 import { userUpdate } from '@/store/user/UserRedux';
 
@@ -36,11 +40,30 @@ function* userLoginRequestSaga({ payload }: ActionPayload) {
   }
 }
 
+function* userLogoutRequestSaga() {
+  try {
+    // @ts-ignore
+    global.token = null;
+    yield put(
+      userUpdate({
+        token: null,
+        profile: null,
+      }),
+    );
+    yield call(reset, 'SLogin');
+  } catch (e) {}
+}
+
 export default function* watchUser() {
   yield takeLatest(USER_LOGIN_REQUEST_SAGA, userLoginRequestSaga);
+  yield takeLatest(USER_LOGOUT_REQUEST_SAGA, userLogoutRequestSaga);
 }
 
 export const userLoginAction = (payload: LoginPayload): ActionPayload => ({
   type: USER_LOGIN_REQUEST_SAGA,
   payload,
+});
+
+export const userLogoutAction = (): ActionPayload => ({
+  type: USER_LOGOUT_REQUEST_SAGA,
 });

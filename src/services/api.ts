@@ -10,7 +10,6 @@ export type ApiResponse = AxiosResponse<any> & {
 export const setToken = (token: string | null) => (_token = token);
 const transformRequest = (config: any) => {
   const _config = { ...config };
-  console.log({ _token });
   if (_token) {
     _config.headers.Authorization = `Bearer ${_token}`;
   }
