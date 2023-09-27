@@ -26,7 +26,7 @@ export default function Chat(props: Props) {
     <View style={styles.container}>
       <FlatList
         ref={chatRef}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.id.toString()}
         data={messages}
         renderItem={renderItem}
         ItemSeparatorComponent={renderSeparator}

@@ -12,7 +12,8 @@ import { RootState } from '@/store';
 import { UserProfile } from '@/store/user/types';
 import { MessageType } from '@/components/Chat/types';
 import DeviceInfo from 'react-native-device-info';
-import { Alert } from "react-native";
+import { Alert } from 'react-native';
+import moment from "moment";
 
 const api = Api.create();
 
@@ -63,7 +64,7 @@ function* chatSendMessageRequestSaga({ payload }: ActionPayload) {
     if (response.ok && !!response.data?.message) {
       yield put(
         chatAdd({
-          id: new Date().toString(),
+          id: moment().format('X'),
           content: response.data?.message,
           type: 'text',
           user: {
