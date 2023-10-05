@@ -5,3 +5,5 @@ export * from './Loading';
 export * from './Header';
 export * from './Chat';
 export * from './Text';
+export * from './Navbar';
+export * from './Modal';

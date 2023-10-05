@@ -2,9 +2,9 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { MessageType } from '@/components/Chat/types';
 import { Colors } from '@/theme';
-import { Typewriter } from '@/components/Text';
 import { Avatar } from '@/components/Chat/Avatar';
 import { useTheme } from '@/hooks';
+import Markdown from 'react-native-markdown-display';
 
 export default function Message(props: MessageType) {
   const { content, isSelf } = props;
@@ -20,12 +20,16 @@ export default function Message(props: MessageType) {
         )}
 
         {content && !isSelf && (
-          <Typewriter
-            style={styles.txtContentLeft}
-            delay={200}
-            text={content}
-          />
+          <Markdown style={styles.txtContentLeft}>{content}</Markdown>
         )}
+
+        {/*{content && !isSelf && (*/}
+        {/*  <Typewriter*/}
+        {/*    style={styles.txtContentLeft}*/}
+        {/*    delay={200}*/}
+        {/*    text={content}*/}
+        {/*  />*/}
+        {/*)}*/}
       </View>
     </View>
   );

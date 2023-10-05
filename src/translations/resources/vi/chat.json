@@ -7,5 +7,6 @@
   "btn_ok": "Đồng ý",
   "placeholder_chat_input": "Nhập câu hỏi của bạn...",
   "alert_title_over_limit": "Thông báo",
-  "alert_message_over_limit": "Bạn đã vượt quá số lượng tin nhắn cho phép. Vui lòng đăng ký để gửi tin nhắn không giới hạn."
+  "alert_message_over_limit": "Bạn đã vượt quá số lượng tin nhắn cho phép. Vui lòng đăng ký để gửi tin nhắn không giới hạn.",
+  "modal_title_history": "Lịch sử",
 }

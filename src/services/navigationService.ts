@@ -14,6 +14,12 @@ export const navigate = (name: string, params?: any) => {
   }
 };
 
+export const goBack = () => {
+  if (navigationIsReady() && !!navigationRef.current) {
+    return navigationRef.current.goBack();
+  }
+};
+
 export const reset = (name: string, params = null) => {
   if (navigationIsReady() && !!navigationRef.current) {
     return navigationRef.current.reset({

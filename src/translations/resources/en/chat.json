@@ -7,5 +7,6 @@
   "btn_ok": "Ok",
   "placeholder_chat_input": "Ask me anything",
   "alert_title_over_limit": "Over limit",
-  "alert_message_over_limit": "You have reached the limit of {{count}} messages. Signup for free to send unlimited messages."
+  "alert_message_over_limit": "You have reached the limit of {{count}} messages. Signup for free to send unlimited messages.",
+  "modal_title_history": "History"
 }

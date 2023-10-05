@@ -11,6 +11,7 @@ import { appStateUpdate } from '@/store/appState/AppStateRedux';
 import i18next from 'i18next';
 import Api, { ApiResponse, setToken } from '@/services/api';
 import { reset } from '@/services';
+import { userGetProfileAction, userLoggedSyncAction } from "@/store/user/UserSaga";
 
 const api = Api.create();
 function* appStartupSaga() {
@@ -34,11 +35,12 @@ function* appStartupSaga() {
   i18next.changeLanguage(_appLanguage);
 
   const token: string = yield select((state: RootState) => state.user.token);
+  // let _targetScreen = 'SProfileEdit';
   let _targetScreen = 'SWelcome';
-  // let _targetScreen = 'SChat';
   if (token) {
     yield call(setToken, token);
     _targetScreen = 'SChat';
+    yield put(userLoggedSyncAction());
   }
   yield call(reset, _targetScreen);
 

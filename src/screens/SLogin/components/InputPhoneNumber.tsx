@@ -55,6 +55,8 @@ export default (props: {
         value={phoneNumber}
         onChangeText={setPhoneNumber}
         keyboardType={'phone-pad'}
+        placeholder={'123 456 789'}
+        placeholderTextColor={Colors.gray}
       />
     </View>
   );

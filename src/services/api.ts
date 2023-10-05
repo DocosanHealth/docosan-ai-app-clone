@@ -59,9 +59,9 @@ const create = () => {
   };
 
   const _api = axios.create({
-    // baseURL: 'https://api.docosan.com/api',
+    baseURL: 'https://api.docosan.com/api',
     // baseURL: 'https://develop.docosan.com/test/api',
-    baseURL: 'https://develop.docosan.com/thanh/api',
+    // baseURL: 'https://develop.docosan.com/thanh/api',
     headers,
     timeout: 120000, // 2minutes
   });
@@ -85,6 +85,11 @@ const create = () => {
   const getEnvironment = () => _api.get<ApiResponse>('diseases');
   const sendMessage = (payload: any) =>
     _api.post<ApiResponse>('patients/chat-gpt', payload);
+  const getChatHistory = (payload: any) =>
+    _api.get<ApiResponse>(`patients/chat-gpt-history${serialize(payload)}`);
+  const updateProfile = (payload: any) =>
+    _api.post<ApiResponse>('register', payload);
+  const getProfile = () => _api.get<ApiResponse>('me');
 
   return {
     login,
@@ -92,6 +97,9 @@ const create = () => {
     logout,
     getEnvironment,
     sendMessage,
+    getChatHistory,
+    updateProfile,
+    getProfile,
   };
 };
 

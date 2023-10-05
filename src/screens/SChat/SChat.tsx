@@ -1,6 +1,6 @@
 import React from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
-import { Chat, Header } from '@/components';
+import { Chat, ChatHistoryModal, DisclaimerModal, Header } from "@/components";
 import { Colors } from '@/theme';
 import { ChatInput } from '@/components/Chat/ChatInput';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { navigate } from '@/services';
 
 export default function SChat() {
-  const { messages = [], isLoading } = useSelector(
+  const { messages = [], isLoading, lastUpdatedAt } = useSelector(
     (state: RootState) => state.chat,
   );
   const selfProfile = useSelector(
@@ -33,7 +33,7 @@ export default function SChat() {
     ) {
       return Alert.alert(
         t('alert_title_over_limit'),
-        t('alert_message_over_limit'),
+        t('alert_message_over_limit', { count: 5 }),
         [
           {
             text: t('btn_ok'),
@@ -59,9 +59,14 @@ export default function SChat() {
           avatar: selfProfile?.avatar || '',
         }}
         isLoading={isLoading}
+        lastUpdatedAt={lastUpdatedAt}
       />
 
       <ChatInput onSend={onSend} />
+
+      <DisclaimerModal />
+
+      <ChatHistoryModal />
     </View>
   );
 }

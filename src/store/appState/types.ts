@@ -16,6 +16,7 @@ export type AppStateType = {
       onPress: () => void;
     }>;
   };
+  isAgreeDisclaimer: boolean;
 };
 
 export type AppStatePayload = {

@@ -9,10 +9,11 @@ type Props = {
   messages: Array<MessageType>;
   selfInfo: User;
   isLoading: boolean;
+  lastUpdatedAt: number;
 };
 
 export default function Chat(props: Props) {
-  const { messages, selfInfo, isLoading = false } = props;
+  const { messages, selfInfo, isLoading = false, lastUpdatedAt = 0 } = props;
   const chatRef = React.useRef<FlatList>(null);
 
   const renderItem = ({ item }: { item: MessageType }) => {
@@ -26,8 +27,9 @@ export default function Chat(props: Props) {
     <View style={styles.container}>
       <FlatList
         ref={chatRef}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={item => item.id}
         data={messages}
+        extraData={lastUpdatedAt}
         renderItem={renderItem}
         ItemSeparatorComponent={renderSeparator}
         ListFooterComponent={(isLoading && <LoadingMessage />) || null}

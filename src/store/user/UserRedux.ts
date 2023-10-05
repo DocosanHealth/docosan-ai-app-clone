@@ -8,12 +8,23 @@ const userState = createSlice({
     profile: {},
   } as UserType,
   reducers: {
-    userUpdate: (state, { payload: { token, profile } }: userPayload) => {
+    userUpdate: (
+      state,
+      {
+        payload: { token, profile, tempPhoneNumber, tempPhoneCode },
+      }: userPayload,
+    ) => {
       if (token !== undefined) {
         state.token = token;
       }
       if (profile !== undefined) {
         state.profile = profile;
+      }
+      if (tempPhoneNumber !== undefined) {
+        state.tempPhoneNumber = tempPhoneNumber;
+      }
+      if (tempPhoneCode !== undefined) {
+        state.tempPhoneCode = tempPhoneCode;
       }
     },
   },

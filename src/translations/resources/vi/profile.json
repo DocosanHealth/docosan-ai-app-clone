@@ -1,0 +1,16 @@
+{
+  "screen_title_register": "Đăng Ký",
+  "screen_description": "Tạo tài khoản để bắt đầu sử dụng",
+  "input_label_name": "Tên",
+  "input_label_email": "Email",
+  "input_label_gender": "Giới Tính",
+  "input_label_phone_number": "Số Điện Thoại",
+  "placeholder_name": "Nguyễn Văn A",
+  "placeholder_email": "abc@example.com",
+  "placeholder_gender": "",
+  "placeholder_phone_number": "123 456 789",
+  "btn_continue": "Tiếp Tục",
+  "btn_cancel": "Hủy",
+  "alert_title_logout": "Đăng Xuất",
+  "alert_message_logout": "Bạn có chắc chắn muốn đăng xuất?"
+}

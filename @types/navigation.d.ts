@@ -11,6 +11,7 @@ export type ApplicationStackParamList = {
   SWelcome: undefined;
   SLogin: undefined;
   SChat: undefined;
+  SProfileEdit: undefined;
 };
 
 export type ApplicationScreenProps =

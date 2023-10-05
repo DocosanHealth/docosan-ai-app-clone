@@ -135,7 +135,7 @@ const SLogin = () => {
           title={t('btn_continue')}
           onPress={onRequestOTP}
           isLoading={loadingType === 'otp_request'}
-          disabled={!isChecked}
+          disabled={!isChecked || phoneNumber.length < 9}
         />
         <ModalOTP
           visible={isShowOTP}

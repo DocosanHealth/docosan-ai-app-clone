@@ -17,6 +17,8 @@ import { useNavigation } from '@react-navigation/native';
 import { Colors } from '@/theme';
 import { Icon } from '@/components/Icon/Icon';
 import { faArrowRight } from '@fortawesome/pro-light-svg-icons';
+import { navigate } from '@/services';
+import LanguageSwitcher from '@/components/Languages';
 
 const SWelcome = () => {
   const { t } = useTranslation(['example', 'welcome']);
@@ -79,8 +81,7 @@ const SWelcome = () => {
   };
 
   const onNavigateToChat = () => {
-    navigation.navigate('SChat');
-    // navigation.navigate('SLogin');
+    navigate('SChat');
   };
 
   return (
@@ -96,6 +97,14 @@ const SWelcome = () => {
         end={{ x: 1, y: 1 }}
         locations={indexActive === 0 ? [0.17, 0.44, 0.75] : [0.0556, 0.38, 0.7]}
       >
+        <View
+          style={{
+            alignItems: 'flex-end',
+          }}
+        >
+          <LanguageSwitcher />
+        </View>
+
         <CarouselBox
           data={data}
           t={t}

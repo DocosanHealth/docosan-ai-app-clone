@@ -12,12 +12,19 @@ const appState = createSlice({
       title: '',
       options: [],
     },
+    isAgreeDisclaimer: false,
   } as AppStateType,
   reducers: {
     appStateUpdate: (
       state,
       {
-        payload: { status, language, phoneCodes, actionSheet },
+        payload: {
+          status,
+          language,
+          phoneCodes,
+          actionSheet,
+          isAgreeDisclaimer,
+        },
       }: AppStatePayload,
     ) => {
       if (status) {
@@ -31,6 +38,9 @@ const appState = createSlice({
       }
       if (actionSheet) {
         state.actionSheet = actionSheet;
+      }
+      if (isAgreeDisclaimer !== undefined) {
+        state.isAgreeDisclaimer = isAgreeDisclaimer;
       }
     },
   },

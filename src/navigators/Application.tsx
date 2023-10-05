@@ -3,10 +3,8 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  Pressable,
   SafeAreaView,
   StatusBar,
-  View,
 } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import {
@@ -24,6 +22,8 @@ import { appStartupAction } from '@/store/appState/AppStateSaga';
 import Toast from 'react-native-toast-message';
 import { setNavigationRef } from '@/services/navigationService';
 import { ActionSheet } from '@/components';
+import { MenuProvider } from 'react-native-popup-menu';
+import SProfileEdit from "@/screens/SProfileEdit/SProfileEdit";
 
 const Stack = createStackNavigator<ApplicationStackParamList>();
 
@@ -52,23 +52,25 @@ const ApplicationNavigator = () => {
         style={[Layout.fill, { backgroundColor: colors.card }]}
         onTouchStart={Keyboard.dismiss}
       >
-        <NavigationContainer
-          theme={NavigationTheme}
-          ref={navigationRef}
-          onReady={() => {
-            setNavigationRef(navigationRef);
-          }}
-        >
-          <StatusBar barStyle={darkMode ? 'light-content' : 'dark-content'} />
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Startup" component={Startup} />
-            <Stack.Screen name="SLogin" component={SLogin} />
-            <Stack.Screen name="SWelcome" component={SWelcome} />
-            <Stack.Screen name="Main" component={MainNavigator} />
-            <Stack.Screen name="SChat" component={SChat} />
-          </Stack.Navigator>
-        </NavigationContainer>
-
+        <MenuProvider>
+          <NavigationContainer
+            theme={NavigationTheme}
+            ref={navigationRef}
+            onReady={() => {
+              setNavigationRef(navigationRef);
+            }}
+          >
+            <StatusBar barStyle={darkMode ? 'light-content' : 'dark-content'} />
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="Startup" component={Startup} />
+              <Stack.Screen name="SLogin" component={SLogin} />
+              <Stack.Screen name="SWelcome" component={SWelcome} />
+              <Stack.Screen name="Main" component={MainNavigator} />
+              <Stack.Screen name="SChat" component={SChat} />
+              <Stack.Screen name="SProfileEdit" component={SProfileEdit} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </MenuProvider>
         <ActionSheet />
       </KeyboardAvoidingView>
 

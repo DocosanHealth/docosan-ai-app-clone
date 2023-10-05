@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions, Image } from 'react-native';
-import LanguageSwitcher from '../Languages';
 import Videos from '../Videos';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import styled from 'styled-components/native';
+import LanguageSwitcher from '@/components/Languages';
 
 export const SLIDER_WIDTH = Dimensions.get('window').width;
 export const ITEM_WIDTH = SLIDER_WIDTH;
@@ -14,7 +14,6 @@ const CarouselCardItem = ({ item, index, activeIndex }: any) => {
 
   return (
     <View style={styles.container} key={index}>
-      <LanguageSwitcher />
       {item?.language === true && !!item?.imgUrl ? (
         <View style={styles.boxImage}>
           <StyledImage
@@ -43,15 +42,27 @@ const CarouselCardItem = ({ item, index, activeIndex }: any) => {
         <View style={styles.boxContent}>
           <>
             <StyledBox languages={language === 'vi' ? true : false}>
-              <Image source={require('theme/assets/images/US.png')} style={styles.image} />
-              <StyledTextFlag languages={language === 'vi'}>{item?.textFlagVN}</StyledTextFlag>
+              <Image
+                source={require('theme/assets/images/US.png')}
+                style={styles.image}
+              />
+              <StyledTextFlag languages={language === 'vi'}>
+                {item?.textFlagVN}
+              </StyledTextFlag>
             </StyledBox>
             <StyledBox languages={language === 'vi' ? true : false}>
-              <Image source={require('theme/assets/images/VN.png')} style={styles.image} />
-              <StyledTextFlag languages={language === 'vi'}>{item?.textFlagUS}</StyledTextFlag>
+              <Image
+                source={require('theme/assets/images/VN.png')}
+                style={styles.image}
+              />
+              <StyledTextFlag languages={language === 'vi'}>
+                {item?.textFlagUS}
+              </StyledTextFlag>
             </StyledBox>
           </>
-          <StyledTextContent languages={language === 'vi' ? true : false}>{item?.content}</StyledTextContent>
+          <StyledTextContent languages={language === 'vi' ? true : false}>
+            {item?.content}
+          </StyledTextContent>
         </View>
       ) : null}
       {item?.title === true ? (
@@ -61,13 +72,14 @@ const CarouselCardItem = ({ item, index, activeIndex }: any) => {
           {item?.title2}
         </StyledTextTitle>
       ) : null}
+
     </View>
   );
 };
 
 const StyledImage = styled.Image<{ resizeMode: any }>`
   align-self: center;
-  resize-mode: ${props => props.resizeMode ? props.resizeMode : 'cover'};
+  resize-mode: ${props => (props.resizeMode ? props.resizeMode : 'cover')};
   width: 100%;
   height: 100%;
 `;
@@ -84,11 +96,11 @@ const StyledBox = styled.View<{ languages: boolean }>`
 const StyledTextFlag = styled.Text<{ languages: boolean }>`
   font-family: Inter;
   font-weight: 600;
-  line-height: ${props => props.languages ? '18px' : '24px'};
+  line-height: ${props => (props.languages ? '18px' : '24px')};
   font-size: 16px;
   letter-spacing: 0;
   text-align: left;
-  color: #FFFFFF;
+  color: #ffffff;
   width: 80%;
 `;
 const StyledTextContent = styled.Text<{ languages: boolean }>`
@@ -98,7 +110,7 @@ const StyledTextContent = styled.Text<{ languages: boolean }>`
   font-size: 17px;
   letter-spacing: 0;
   text-align: center;
-  color: #FFFFFF;
+  color: #ffffff;
   align-self: center;
   justify-content: center;
   padding-horizontal: 30px;
@@ -106,12 +118,12 @@ const StyledTextContent = styled.Text<{ languages: boolean }>`
 
 const StyledTextTitle = styled.Text<{ languages: boolean }>`
   font-family: Inter;
-  font-size: ${props => props.languages ? '26px' : '32px'};
+  font-size: ${props => (props.languages ? '26px' : '32px')};
   font-weight: 700;
-  line-height: ${props => props.languages ? '32px' : '38px'};
+  line-height: ${props => (props.languages ? '32px' : '38px')};
   letter-spacing: 0;
   text-align: center;
-  color: #FFFFFF;
+  color: #ffffff;
   margin-top: 20px;
   margin-horizontal: 30px;
 `;
@@ -143,7 +155,14 @@ const styles = StyleSheet.create({
     width: 32,
     height: 24,
   },
+  viewLanguageSwitcher: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    backgroundColor: 'red',
+    width: 100,
+    height: 100,
+  },
 });
 
 export default CarouselCardItem;
-

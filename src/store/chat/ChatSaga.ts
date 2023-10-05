@@ -1,11 +1,15 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { ApiResponse } from '@/services/api';
-import { CHAT_SEND_MESSAGE_REQUEST_SAGA } from '@/store/chat/types';
+import {
+  CHAT_HISTORY_REQUEST_SAGA,
+  CHAT_SEND_MESSAGE_REQUEST_SAGA,
+} from '@/store/chat/types';
 import { Api } from '@/services';
 import { ActionPayload } from '@/store/types';
 import {
   chatAdd,
   chatUpdateConversationId,
+  chatUpdateHistory,
   chatUpdateLoading,
 } from '@/store/chat/ChatRedux';
 import { RootState } from '@/store';
@@ -13,7 +17,7 @@ import { UserProfile } from '@/store/user/types';
 import { MessageType } from '@/components/Chat/types';
 import DeviceInfo from 'react-native-device-info';
 import { Alert } from 'react-native';
-import moment from "moment";
+import moment from 'moment';
 
 const api = Api.create();
 
@@ -84,11 +88,35 @@ function* chatSendMessageRequestSaga({ payload }: ActionPayload) {
   yield put(chatUpdateLoading(false));
 }
 
+function* chatHistoryRequestSaga() {
+  const deviceUniqueId: string = yield call(DeviceInfo.getUniqueId);
+  const response: ApiResponse = yield call(api.getChatHistory, {
+    device_id: deviceUniqueId,
+  });
+  if (response.ok) {
+    const _data = [];
+    for (const i of response.data.data) {
+      const _message = JSON.parse(i.messages);
+      _data.push({
+        id: i.id,
+        messages: _message,
+        createdAt: i.created_at,
+      });
+    }
+    yield put(chatUpdateHistory(_data));
+  }
+}
+
 export default function* watchChat() {
   yield takeLatest(CHAT_SEND_MESSAGE_REQUEST_SAGA, chatSendMessageRequestSaga);
+  yield takeLatest(CHAT_HISTORY_REQUEST_SAGA, chatHistoryRequestSaga);
 }
 
 export const chatSendMessageAction = (payload: string): ActionPayload => ({
   type: CHAT_SEND_MESSAGE_REQUEST_SAGA,
   payload,
+});
+
+export const chatHistoryAction = (): ActionPayload => ({
+  type: CHAT_HISTORY_REQUEST_SAGA,
 });

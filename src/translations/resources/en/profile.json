@@ -1,0 +1,16 @@
+{
+  "screen_title_register": "Register",
+  "screen_description": "Create an account to access all the features of Dr. An",
+  "input_label_name": "Your Name",
+  "input_label_email": "Email",
+  "input_label_gender": "Gender",
+  "input_label_phone_number": "Phone Number",
+  "placeholder_name": "Ex. Saul Ramirez",
+  "placeholder_email": "Ex: abc@example.com",
+  "placeholder_gender": "",
+  "placeholder_phone_number": "Ex: 123 456 789",
+  "btn_continue": "Continue",
+  "btn_cancel": "Cancel",
+  "alert_title_logout": "Logout",
+  "alert_message_logout": "Are you sure you want to logout?"
+}

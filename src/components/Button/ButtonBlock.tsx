@@ -10,13 +10,13 @@ import { ButtonProps } from '@/components/Button/types';
 import LinearGradient from 'react-native-linear-gradient';
 
 export default (props: ButtonProps) => {
-  const { title, onPress, isLoading, disabled = false } = props;
+  const { title, onPress, isLoading, disabled = false, style } = props;
   return (
     <LinearGradient
       colors={!disabled ? ['#4AC0A4', '#70BDE9'] : ['#BDBDBD', '#BDBDBD']}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
-      style={styles.container}
+      style={[styles.container, style]}
     >
       {!isLoading && (
         <TouchableOpacity
