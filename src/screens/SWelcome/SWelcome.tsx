@@ -133,7 +133,11 @@ const SWelcome = () => {
             </Text>
             <TouchableOpacity
               onPress={() =>
-                openLink('https://www.docosan.com/dieu-khoan-su-dung')
+                openLink(
+                  language === 'vi'
+                    ? 'https://dev.docosan.com/dieu-khoan-su-dung-ai'
+                    : 'https://dev.docosan.com/en/term-of-use-ai'
+                )
               }
             >
               <Text style={[styles.boxText__link__1, styles.styleText]}>
